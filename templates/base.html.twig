@@ -28,7 +28,10 @@
                                 fruit
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="#">fruit toevoegen</a>
+                                <a class="dropdown-item" href="{{ path('Fruitlijst') }}">fruitlijst</a>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                <a class="dropdown-item" href="{{ path('fruittoevoegen') }}">fruit toevoegen</a>
+                                {% endif %}
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -37,6 +40,9 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item" href="{{ path('receptoverzicht') }}">recepten overzicht</a>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <a class="dropdown-item" href="{{ path('recepttoevoegen') }}">recept toevoegen</a>
+                                {% endif %}
                             </div>
                         </li>
                         <li class="nav-item">
@@ -49,6 +55,18 @@
                 </div>
             </nav>
             <img src="/img/italy.jpeg" class="img-fluid" alt="Responsive image" style="width: 100%; height: 45vh;">
+
+            {% if app.user %}
+                <div class="container text-center" style="margin-bottom: 10px;">
+                <div class="display-4">
+                    Welkom gebruiker!
+                    <br>
+                    {{ app.user.username }}
+                    <br>
+                    <a href="{{ path('app_logout') }}"><button class="btn btn-alert">Uitloggen</button></a>
+                </div>
+                </div>
+            {% endif %}
         {% endblock %}
         {% block body %}
 

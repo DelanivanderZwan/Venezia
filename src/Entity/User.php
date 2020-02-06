@@ -46,7 +46,7 @@ class User implements UserInterface
     private $telefoonnummer;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\bestelregel", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Bestelregel", mappedBy="user")
      */
     private $user;
 

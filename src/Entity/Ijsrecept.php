@@ -43,11 +43,6 @@ class Ijsrecept
      */
     private $ijrecept;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $fruit;
-
     public function __construct()
     {
         $this->ijrecept = new ArrayCollection();
@@ -137,15 +132,4 @@ class Ijsrecept
         return $this;
     }
 
-    public function getFruit(): ?string
-    {
-        return $this->fruit;
-    }
-
-    public function setFruit(string $fruit): self
-    {
-        $this->fruit = $fruit;
-
-        return $this;
-    }
 }

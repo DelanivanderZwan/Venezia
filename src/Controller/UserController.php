@@ -2,7 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Fruit;
+use App\Entity\Ijsrecept;
 use App\Entity\User;
+use App\Form\FruitType;
+use App\Form\IjsreceptType;
 use App\Form\RegistrationType;
 use App\Repository\FruitRepository;
 use App\Repository\IjsreceptRepository;
@@ -43,12 +47,53 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/Recepttoevoegen", name="recepttoevoegen")
+     */
+    public function RecepttoevoegenAction(Request $request)
+    {
+        $ijsrecept = new Ijsrecept();
+
+        $form = $this->createForm(IjsreceptType::class. $ijsrecept);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($ijsrecept);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('receptoverzicht');
+        }
+        return $this->render('user/recepttoevoegen.html.twig');
+    }
+
+    /**
+     * @Route("/Fruitlijst", name="Fruitlijst")
+     */
+    public function FruitlijstAction()
+    {
+        return $this->render('user/fruitlijst.html.twig');
+    }
+
+    /**
      * @Route("/FruitToevoegen", name="fruittoevoegen")
      */
-    public function fruittoevoegen(FruitRepository $fruitRepository)
+    public function fruittoevoegenAction(Request $request)
     {
+        $fruit = new Fruit();
+
+        $form = $this->createForm(FruitType::class, $fruit);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($fruit);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('Home');
+        }
+
         return $this->render('user/fruitadd.html.twig', [
-            'fruit' => $fruitRepository->findAll(),
+            'form' => $form->createView(),
         ]);
     }
 

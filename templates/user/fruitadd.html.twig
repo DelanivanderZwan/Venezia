@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {{ parent() }}
     <h1 class="display-3 text-left">Fruit</h1>
+
+    <div class="container">
+        {{ form(form) }}
+    </div>
 {% endblock %}
